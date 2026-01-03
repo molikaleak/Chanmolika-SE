@@ -26,3 +26,7 @@ dist-ssr
 # 3D assets (temporary)
 *.glb
 public/*.glb
+
+# package-lock and yarn lock files
+package-lock.json
+yarn.lock

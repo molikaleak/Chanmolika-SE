@@ -1,19 +1,20 @@
-import type { JSX } from "react";
+import AppLayout from "./AppLayout";
 import MapScene from "../components/map/MapScene";
 
-export default function Job(): JSX.Element {
+export default function Job() {
   return (
-    <div className="w-full h-screen bg-black relative">
-      {/* Optional title overlay */}
-      <div className="absolute top-6 left-6 z-10 text-white">
-        <h1 className="text-2xl font-bold">Career Journey</h1>
-        <p className="text-sm opacity-80">
-          Click locations to explore my experience
-        </p>
-      </div>
+    <AppLayout variant="overlay">
+      <div className="relative w-screen h-screen overflow-hidden">
+        <MapScene />
 
-      {/* 3D Map */}
-      <MapScene />
-    </div>
+        {/* HUD */}
+        <div className="pointer-events-none absolute top-6 left-6 z-20 text-white">
+          <h1 className="text-2xl font-bold">Career Journey</h1>
+          <p className="text-sm opacity-80">
+            Click locations to explore my experience
+          </p>
+        </div>
+      </div>
+    </AppLayout>
   );
 }

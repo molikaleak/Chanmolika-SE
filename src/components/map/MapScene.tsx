@@ -26,20 +26,79 @@ export default function MapScene(): JSX.Element {
   const [activeExperience, setActiveExperience] =
     useState<(typeof jobLocations)[number] | null>(null);
 
+  // 🔥 NEW: view-all index
+  const [viewIndex, setViewIndex] = useState<number | null>(null);
+
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* ================= POPUP ================= */}
-{activeExperience && (
-  <ExperiencePopup
-    experience={activeExperience}
-    onBack={() => {
-      setActiveExperience(null);
-      setSelectedJob(null);
-      setFocusTarget(null);
-    }}
-  />
-)}
+      {/* ================= VIEW ALL BUTTON ================= */}
+      <button
+        onClick={() => {
+          setViewIndex(0);
+          setSelectedJob(jobLocations[0]);
+          setActiveExperience(jobLocations[0]);
+          setFocusTarget(new THREE.Vector3(...jobLocations[0].position));
+        }}
+        className="absolute top-6 right-6 z-50 px-4 py-2
+                   bg-white text-black font-bold rounded-md
+                   shadow hover:scale-105 transition"
+      >
+        VIEW ALL
+      </button>
 
+      {/* ================= POPUP ================= */}
+      {activeExperience && (
+        <>
+          <ExperiencePopup
+            experience={activeExperience}
+            onBack={() => {
+              setActiveExperience(null);
+              setSelectedJob(null);
+              setFocusTarget(null);
+              setViewIndex(null);
+            }}
+          />
+
+          {/* 🔁 NEXT / PREV (ONLY IN VIEW ALL MODE) */}
+          {viewIndex !== null && (
+            <div className="absolute bottom-6 right-6 z-50 flex gap-2">
+              <button
+                disabled={viewIndex === 0}
+                onClick={() => {
+                  const prev = viewIndex - 1;
+                  setViewIndex(prev);
+                  setSelectedJob(jobLocations[prev]);
+                  setActiveExperience(jobLocations[prev]);
+                  setFocusTarget(
+                    new THREE.Vector3(...jobLocations[prev].position)
+                  );
+                }}
+                className="px-4 py-2 bg-black/80 text-white rounded
+                           disabled:opacity-40"
+              >
+                ◀ Prev
+              </button>
+
+              <button
+                disabled={viewIndex === jobLocations.length - 1}
+                onClick={() => {
+                  const next = viewIndex + 1;
+                  setViewIndex(next);
+                  setSelectedJob(jobLocations[next]);
+                  setActiveExperience(jobLocations[next]);
+                  setFocusTarget(
+                    new THREE.Vector3(...jobLocations[next].position)
+                  );
+                }}
+                className="px-4 py-2 bg-black/80 text-white rounded
+                           disabled:opacity-40"
+              >
+                Next ▶
+              </button>
+            </div>
+          )}
+        </>
+      )}
 
       <Canvas camera={{ position: [0, 12, 18], fov: 45 }}>
         {/* LIGHT */}
@@ -53,26 +112,27 @@ export default function MapScene(): JSX.Element {
         <CameraController
           target={focusTarget}
           onArrive={() => {
-            if (selectedJob) {
+            if (selectedJob && viewIndex === null) {
               setActiveExperience(selectedJob);
             }
           }}
         />
 
-{jobLocations.map((job, index) => (
-  <LocationMarker
-    key={job.id}
-    position={job.position}
-    index={index + 1}
-    isActive={selectedJob?.id === job.id}   // ✅ controls fade
-    onClick={() => {
-      setSelectedJob(job);
-      setFocusTarget(new THREE.Vector3(...job.position));
-    }}
-  />
-))}
-
-
+        {/* 📍 MARKERS */}
+        {jobLocations.map((job, index) => (
+          <LocationMarker
+            key={job.id}
+            position={job.position}
+            index={index + 1}
+            isActive={selectedJob?.id === job.id}
+            onClick={() => {
+              setSelectedJob(job);
+              setActiveExperience(null);
+              setViewIndex(null); // exit view-all mode
+              setFocusTarget(new THREE.Vector3(...job.position));
+            }}
+          />
+        ))}
 
         {/* CONTROLS */}
         <OrbitControls

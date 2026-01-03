@@ -20,7 +20,7 @@ export const jobLocations: JobLocation[] = [
     title: "LMS Lead",
     company: "Mavex",
     position: [2.5, 0.2, -2.0],
-    image: "/moo1.png",
+    image: `${import.meta.env.BASE_URL}moo1.png`,
     description:
       "Led LMS platform development, integrating interactive UI and real-time features.",
     period: "2023 – 2024",
@@ -32,7 +32,7 @@ export const jobLocations: JobLocation[] = [
     title: "Frontend Engineer",
     company: "Company B",
     position: [-3.0, 0.2, 2.5],
-    image: "/moo2.png",
+    image: `${import.meta.env.BASE_URL}moo2.png`,
     description:
       "Built scalable front-end systems with performance-focused architecture.",
     period: "2022 – 2023",
@@ -44,7 +44,7 @@ export const jobLocations: JobLocation[] = [
     title: "Fullstack Developer",
     company: "Company C",
     position: [0.0, 0.2, 4.0],
-    image: "/moo3.png",
+    image: `${import.meta.env.BASE_URL}moo3.png`,
     description:
       "Developed APIs and dashboards supporting real-world business workflows.",
     period: "2021 – 2022",
@@ -56,7 +56,7 @@ export const jobLocations: JobLocation[] = [
     title: "AI Research Assistant",
     company: "University Lab",
     position: [3.5, 0.2, 1.8],
-    image: "/moo4.png",
+    image: `${import.meta.env.BASE_URL}moo4.png`,
     description:
       "Researched ML models and data pipelines for experimental AI systems.",
     period: "2020 – 2021",
@@ -68,7 +68,7 @@ export const jobLocations: JobLocation[] = [
     title: "Freelance Developer",
     company: "Remote",
     position: [-3.8, 0.2, -3.0],
-    image: "/moo5.png",
+    image: `${import.meta.env.BASE_URL}moo5.png`,
     description:
       "Delivered end-to-end solutions for multiple international clients.",
     tags: ["Fullstack", "Consulting"],

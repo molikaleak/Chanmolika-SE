@@ -7,7 +7,7 @@ import {
   FileText,
   Mail,
 } from "lucide-react";
-import type { JSX } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const navItems = [
@@ -20,58 +20,106 @@ const navItems = [
   { icon: Mail, label: "Contact", path: "/contact" },
 ];
 
-export default function Sidebar(): JSX.Element {
+export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [visible, setVisible] = useState(false);
+
+  /* ================= EDGE DETECTION ================= */
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (e.clientX < 40) setVisible(true);
+    };
+
+    const handleScroll = () => {
+      setVisible(true);
+      setTimeout(() => setVisible(false), 1500);
+    };
+
+    const handleTouch = (e: TouchEvent) => {
+      if (e.touches[0].clientX < 40) setVisible(true);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("touchstart", handleTouch);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("touchstart", handleTouch);
+    };
+  }, []);
 
   return (
     <aside
-      className="
-        h-full w-[88px]
+      className={`
+        group fixed left-4 top-1/2 -translate-y-1/2 z-40
+        h-[520px]
         rounded-[28px]
         bg-gradient-to-b from-[#3b0f14] via-[#5a141b] to-[#2a0b0f]
         shadow-[0_20px_60px_rgba(0,0,0,0.45)]
-        flex flex-col items-center
-        py-6
-      "
+        transition-all duration-300 ease-out
+        overflow-hidden
+        ${visible ? "w-[72px] opacity-100" : "w-[72px] opacity-0 -translate-x-20"}
+        hover:w-[220px]
+      `}
+      onMouseLeave={() => setVisible(false)}
     >
-      {/* Logo */}
-      <div className="mb-8 text-white font-bold text-xl">CV</div>
+      {/* LOGO */}
+      <div className="mb-8 flex items-center gap-3 px-4 py-6">
+        <span className="text-white font-bold text-xl">CV</span>
+        <span
+          className="
+            text-white/70 text-sm font-medium
+            opacity-0 translate-x-[-8px]
+            group-hover:opacity-100 group-hover:translate-x-0
+            transition
+            whitespace-nowrap
+          "
+        >
+          Resume
+        </span>
+      </div>
 
-      {/* Navigation */}
-      <nav className="flex flex-col gap-5 flex-1">
-        {navItems.map((item, index) => {
+      {/* NAV */}
+      <nav className="flex flex-col gap-2 px-3">
+        {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;
 
           return (
             <button
-              key={index}
+              key={item.path}
               onClick={() => navigate(item.path)}
               className={`
-                relative w-12 h-12
-                flex items-center justify-center
-                rounded-xl
-                transition-all duration-200
+                relative flex items-center gap-4
+                h-11 rounded-xl px-3
+                transition
                 ${
                   isActive
-                    ? "bg-white/20 text-white shadow-md"
+                    ? "bg-white/20 text-white"
                     : "text-white/60 hover:bg-white/10 hover:text-white"
                 }
               `}
-              title={item.label}
             >
               {isActive && (
-                <span
-                  className="
-                    absolute -left-3
-                    w-1.5 h-6
-                    rounded-full
-                    bg-red-400
-                  "
-                />
+                <span className="absolute left-0 w-1.5 h-6 bg-red-400 rounded-full" />
               )}
-              <Icon size={22} />
+
+              <Icon size={20} className="shrink-0" />
+
+              <span
+                className="
+                  text-sm font-medium
+                  opacity-0 translate-x-[-6px]
+                  group-hover:opacity-100 group-hover:translate-x-0
+                  transition
+                  whitespace-nowrap
+                "
+              >
+                {item.label}
+              </span>
             </button>
           );
         })}
