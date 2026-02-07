@@ -3,6 +3,8 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  border: 2px solid red;
+  background-color: white;
 }
 
 .logo {

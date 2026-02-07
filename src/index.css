@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+body {
+  background-color: lime !important;
+}
 @keyframes redSea {
   0% {
     background-position: 0% 0%, 100% 100%, 0% 0%;

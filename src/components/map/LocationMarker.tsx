@@ -1,6 +1,6 @@
-import { useGLTF, Html } from "@react-three/drei";
+import { Html } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useRef, useMemo } from "react";
+import { useRef } from "react";
 import * as THREE from "three";
 
 type Props = {
@@ -19,10 +19,6 @@ export default function LocationMarker({
   scale = 0.25,
 }: Props) {
   const ref = useRef<THREE.Group>(null!);
-  const { scene } = useGLTF("/location_01.glb");
-
-  // Clone scene per marker
-  const clonedScene = useMemo(() => scene.clone(true), [scene]);
 
   // Floating animation
   useFrame(({ clock }) => {
@@ -34,8 +30,11 @@ export default function LocationMarker({
 
   return (
     <group ref={ref} position={position} scale={scale} onClick={onClick}>
-      {/* 3D Marker */}
-      <primitive object={clonedScene} />
+      {/* 3D Marker - fallback sphere */}
+      <mesh>
+        <sphereGeometry args={[0.5, 16, 16]} />
+        <meshStandardMaterial color="cyan" emissive="cyan" emissiveIntensity={0.2} />
+      </mesh>
 
       {/* 🔢 NUMBER LABEL */}
       <Html
@@ -66,4 +65,4 @@ export default function LocationMarker({
   );
 }
 
-useGLTF.preload("/location_01.glb");
+// Preload removed because location_01.glb is missing

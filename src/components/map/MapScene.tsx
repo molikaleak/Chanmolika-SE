@@ -10,7 +10,7 @@ import { jobLocations } from "../../data/jobLocations";
 
 /* ================================
    3D MAP MODEL
-================================ */
+=============================== */
 function MapModel() {
   const { scene } = useGLTF("/map.glb");
   return <primitive object={scene} scale={1} />;
@@ -18,7 +18,7 @@ function MapModel() {
 
 /* ================================
    MAIN MAP SCENE
-================================ */
+=============================== */
 export default function MapScene(): JSX.Element {
   const [focusTarget, setFocusTarget] = useState<THREE.Vector3 | null>(null);
   const [selectedJob, setSelectedJob] =
