@@ -7,7 +7,7 @@ type Props = {
   position: [number, number, number];
   onClick: () => void;
   index: number;
-  isActive: boolean;        // ✅ NEW
+  isActive: boolean; 
   scale?: number;
 };
 

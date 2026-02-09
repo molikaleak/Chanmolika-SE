@@ -3,7 +3,8 @@ export async function matchJobPdf(file: File) {
   const formData = new FormData();
   formData.append("jd", file);
 
-  const res = await fetch("http://localhost:4000/api/match-job-pdf", {
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+  const res = await fetch(`${apiBaseUrl}/api/match-job-pdf`, {
     method: "POST",
     body: formData,
   });
