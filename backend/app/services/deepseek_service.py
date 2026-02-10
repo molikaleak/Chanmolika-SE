@@ -1,4 +1,4 @@
-"""DeepSeek API service for Job Match Analysis."""
+"""DeepSeek API service for Job Match Analysis - FIXED VERSION."""
 import json
 import logging
 import time
@@ -59,7 +59,7 @@ class DeepSeekService:
             response = self.client.chat.completions.create(
                 model=self.model_name,
                 messages=[
-                    {"role": "system", "content": "You are a professional job match analyst. Analyze the job description and return valid JSON with match analysis."},
+                    {"role": "system", "content": "You are a professional job match analyst. Analyze the candidate's CV against the job description and return valid JSON with match analysis."},
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.1,
@@ -84,7 +84,31 @@ class DeepSeekService:
     
     def _build_job_match_prompt(self, cv_data: Dict[str, Any], job_description: str) -> str:
         """Build prompt for job match analysis."""
+        # Extract skills
         skills = [s["name"] for s in cv_data.get("skills", [])]
+        
+        # Extract experience details
+        experiences = cv_data.get("experiences", [])
+        experience_summary = []
+        for exp in experiences[:5]:  # Limit to top 5 most recent
+            exp_text = f"- {exp.get('title', 'Unknown')} at {exp.get('company', 'Unknown')}"
+            if exp.get('description'):
+                exp_text += f": {exp['description'][:200]}"  # Truncate long descriptions
+            experience_summary.append(exp_text)
+        
+        # Extract education details
+        education = cv_data.get("education", [])
+        education_summary = [
+            f"- {edu.get('degree', 'Unknown')} in {edu.get('field_of_study', 'N/A')} from {edu.get('institution', 'Unknown')}"
+            for edu in education[:3]  # Limit to top 3
+        ]
+        
+        # Get raw text for fallback analysis
+        raw_text = cv_data.get("raw_text", "")
+        has_structured_data = len(skills) > 0 or len(experiences) > 0 or len(education) > 0
+        
+        # Calculate total years of experience
+        total_experience_years = len(experiences)  # Simplified - could be calculated more accurately
 
         return f"""
 You are a professional recruitment analyst.
@@ -92,27 +116,47 @@ You are a professional recruitment analyst.
 STRICT RULES:
 - The candidate CV below is the ONLY source of truth.
 - You MUST compare the job description against this CV.
-- Do NOT assume, infer, or hallucinate skills.
+- Do NOT assume, infer, or hallucinate skills or experience.
 - If a skill is not present in the CV, mark it as missing.
-- If CV information is limited, say so explicitly.
+- If CV information is limited, say so explicitly in the analysis.
 
 CANDIDATE CV (AUTHORITATIVE):
-Skills:
-{", ".join(skills) if skills else "No explicit skills listed in CV text"}
 
-Experience Count: {len(cv_data.get("experiences", []))}
-Education Count: {len(cv_data.get("education", []))}
+Skills ({len(skills)} total):
+{", ".join(skills) if skills else "No explicit skills listed in CV"}
+
+Experience ({len(experiences)} positions):
+{chr(10).join(experience_summary) if experience_summary else "No experience details available"}
+
+Education ({len(education)} entries):
+{chr(10).join(education_summary) if education_summary else "No education details available"}
+
+Tech Stack:
+{", ".join(cv_data.get("tech_stack", [])) if cv_data.get("tech_stack") else "Not specified"}
+
+{"="*60}
+{"RAW CV TEXT (for additional context):" if raw_text and not has_structured_data else ""}
+{"="*60 if raw_text and not has_structured_data else ""}
+{f"{raw_text[:3000]}" if raw_text and not has_structured_data else ""}
+{"="*60 if raw_text and not has_structured_data else ""}
 
 JOB DESCRIPTION:
 {job_description[:6000]}
 
-Return ONLY valid JSON:
+Analyze this candidate's fit for the job and return ONLY valid JSON with this EXACT structure:
 {{
-  "match_score": number,
-  "strong_matches": string[],
-  "missing_skills": string[],
-  "analysis": string
+  "match_score": <number 0-100>,
+  "strengths": [<string array of 3-5 key strengths that match the job>],
+  "gaps": [<string array of 3-5 skills or qualifications missing from CV>],
+  "summary": "<2-3 sentence overall assessment>",
+  "skills_match": {{
+    "<skill_name>": <match_percentage 0-100>,
+    ...
+  }},
+  "recommendations": [<string array of 3-5 specific actions to improve candidacy>]
 }}
+
+IMPORTANT: Ensure all field names match exactly: strengths, gaps, summary, skills_match, recommendations.
 """
 
     def _parse_job_match_response(self, response_text: str) -> Dict[str, Any]:
@@ -130,7 +174,14 @@ Return ONLY valid JSON:
             # Parse JSON
             data = json.loads(text)
             
-            # Validate and normalize structure
+            # Validate required fields
+            required_fields = ["match_score", "strengths", "gaps", "summary", "skills_match", "recommendations"]
+            missing_fields = [field for field in required_fields if field not in data]
+            
+            if missing_fields:
+                logger.warning(f"Response missing fields: {missing_fields}. Using defaults.")
+            
+            # Validate and normalize structure with defaults
             result = {
                 "match_score": float(data.get("match_score", 0.0)),
                 "strengths": data.get("strengths", []),
@@ -142,6 +193,16 @@ Return ONLY valid JSON:
             
             # Ensure match_score is within bounds
             result["match_score"] = max(0.0, min(100.0, result["match_score"]))
+            
+            # Validate types
+            if not isinstance(result["strengths"], list):
+                result["strengths"] = []
+            if not isinstance(result["gaps"], list):
+                result["gaps"] = []
+            if not isinstance(result["skills_match"], dict):
+                result["skills_match"] = {}
+            if not isinstance(result["recommendations"], list):
+                result["recommendations"] = []
             
             return result
             

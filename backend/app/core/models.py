@@ -1,4 +1,4 @@
-"""Pydantic models for Job Match Analysis API."""
+"""Pydantic models for Job Match Analysis API - FIXED VERSION."""
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field
 from datetime import datetime
@@ -19,12 +19,11 @@ class JobDescriptionRequest(BaseModel):
 class JobMatchAnalysisResponse(BaseModel):
     """Response for job match analysis."""
     match_score: float = Field(..., ge=0.0, le=100.0, description="Overall match score (0-100)")
+    strengths: List[str] = Field(..., description="Key strengths that match the job")
+    gaps: List[str] = Field(..., description="Skills or qualifications missing from CV")
+    summary: str = Field(..., description="Overall assessment of candidate fit")
     skills_match: Dict[str, float] = Field(..., description="Match scores for individual skills")
-    missing_skills: List[str] = Field(..., description="Skills required but not found")
-    strong_matches: List[str] = Field(..., description="Skills that are strong matches")
-    experience_gap: Optional[float] = Field(None, description="Years of experience gap")
     recommendations: List[str] = Field(..., description="Recommendations for improving match")
-    analysis: str = Field(..., description="Detailed analysis text")
     cv_used: Optional[bool] = Field(None, description="Whether CV data was used in analysis")
     cv_id: Optional[str] = Field(None, description="ID of CV used for analysis")
     processing_time_ms: Optional[float] = None
@@ -91,7 +90,7 @@ class CVAnalysisResponse(BaseModel):
     education: List[Education] = []
     languages: List[LanguageProficiency] = []
     tech_stack: List[str] = []
-    analysis_result: Optional[Dict[str, Any]] = None
+    analysis_result: Optional[Dict[str, Any]] = None  # Changed to Dict instead of nested model
     metadata: Optional[Dict[str, Any]] = None
 
 
@@ -104,7 +103,7 @@ class CVStorageRequest(BaseModel):
     education: List[Education] = []
     languages: List[LanguageProficiency] = []
     tech_stack: List[str] = []
-    analysis_result: Optional[CVAnalysisResponse] = None
+    analysis_result: Optional[Dict[str, Any]] = None  # FIXED: Changed from CVAnalysisResponse to Dict
     metadata: Optional[Dict[str, Any]] = None
 
 

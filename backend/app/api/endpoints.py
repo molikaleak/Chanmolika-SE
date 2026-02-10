@@ -1,4 +1,4 @@
-"""API endpoints for Job Match Analysis."""
+"""API endpoints for Job Match Analysis - FIXED VERSION."""
 import logging
 import time
 from typing import Optional
@@ -63,21 +63,31 @@ async def analyze_job_description(request: JobDescriptionRequest):
         
         logger.info(f"Analyzing job description with DeepSeek (JD length: {len(request.job_description)} chars)")
         
-        # Analyze job match (without CV data)
-        match_result = deepseek_service.analyze_job_match({}, request.job_description)
+        # Get current CV if available
+        cv_data = cv_storage_service.get_current_cv()
+        if cv_data:
+            logger.info(f"Using stored CV for analysis (CV ID: {cv_data['id']})")
+            match_result = deepseek_service.analyze_job_match(cv_data, request.job_description)
+            cv_used = True
+            cv_id = cv_data['id']
+        else:
+            logger.info("No CV available, analyzing job description only")
+            match_result = deepseek_service.analyze_job_match({}, request.job_description)
+            cv_used = False
+            cv_id = None
         
-        # Convert to response model
+        # Convert to response model - FIXED FIELD MAPPING
         processing_time = (time.time() - start_time) * 1000
         
         return JobMatchAnalysisResponse(
             match_score=match_result["match_score"],
+            strengths=match_result.get("strengths", []),  # FIXED: was strong_matches
+            gaps=match_result.get("gaps", []),  # FIXED: was missing_skills
+            summary=match_result.get("summary", "No analysis available."),  # FIXED: was analysis
             skills_match=match_result.get("skills_match", {}),
-            missing_skills=match_result.get("gaps", []),
-            strong_matches=match_result.get("strengths", []),
-            experience_gap=None,
             recommendations=match_result.get("recommendations", []),
-            analysis=match_result.get("summary", ""),
-            cv_used=None,
+            cv_used=cv_used,
+            cv_id=cv_id,
             processing_time_ms=processing_time
         )
         
@@ -357,21 +367,31 @@ async def match_job_pdf(
         
         logger.info(f"Analyzing job match with DeepSeek (source: {source_info}, text length: {len(text_to_analyze)} chars)")
         
-        # Analyze job match (without CV data)
-        match_result = deepseek_service.analyze_job_match({}, text_to_analyze)
+        # Get current CV if available
+        cv_data = cv_storage_service.get_current_cv()
+        if cv_data:
+            logger.info(f"Using stored CV for analysis (CV ID: {cv_data['id']})")
+            match_result = deepseek_service.analyze_job_match(cv_data, text_to_analyze)
+            cv_used = True
+            cv_id = cv_data['id']
+        else:
+            logger.info("No CV available, analyzing job description only")
+            match_result = deepseek_service.analyze_job_match({}, text_to_analyze)
+            cv_used = False
+            cv_id = None
         
-        # Convert to response model
+        # Convert to response model - FIXED FIELD MAPPING
         processing_time = (time.time() - start_time) * 1000
         
         return JobMatchAnalysisResponse(
             match_score=match_result["match_score"],
+            strengths=match_result.get("strengths", []),  # FIXED: was strong_matches
+            gaps=match_result.get("gaps", []),  # FIXED: was missing_skills
+            summary=match_result.get("summary", "No analysis available."),  # FIXED: was analysis
             skills_match=match_result.get("skills_match", {}),
-            missing_skills=match_result.get("gaps", []),
-            strong_matches=match_result.get("strengths", []),
-            experience_gap=None,
             recommendations=match_result.get("recommendations", []),
-            analysis=match_result.get("summary", ""),
-            cv_used=None,
+            cv_used=cv_used,
+            cv_id=cv_id,
             processing_time_ms=processing_time
         )
         

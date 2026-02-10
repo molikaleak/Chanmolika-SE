@@ -45,11 +45,21 @@ export async function matchJobPdf(
 
   console.log("✅ RAW BACKEND RESPONSE:", data);
 
-  // 🔥 FIXED MAPPING
+  // 🔥 FIXED MAPPING - Updated to match backend field names
+  // Ensure score is numeric (handle potential string "o" or other issues)
+  const rawScore = data.match_score;
+  let score = 0;
+  if (typeof rawScore === 'number') {
+    score = rawScore;
+  } else if (typeof rawScore === 'string') {
+    const parsed = parseFloat(rawScore);
+    score = isNaN(parsed) ? 0 : parsed;
+  }
+  
   return {
-    score: data.match_score ?? 0,
-    strengths: data.strong_matches ?? [],
-    gaps: data.missing_skills ?? [],
-    summary: data.analysis ?? "No analysis available.",
+    score,
+    strengths: data.strengths ?? [],
+    gaps: data.gaps ?? [],
+    summary: data.summary ?? "No analysis available.",
   };
 }
