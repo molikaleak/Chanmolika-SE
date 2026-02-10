@@ -7,7 +7,6 @@ import {
   FileText,
   Mail,
 } from "lucide-react";
-import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const navItems = [
@@ -23,33 +22,8 @@ const navItems = [
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [visible, setVisible] = useState(false);
-
-  /* ================= EDGE DETECTION ================= */
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (e.clientX < 40) setVisible(true);
-    };
-
-    const handleScroll = () => {
-      setVisible(true);
-      setTimeout(() => setVisible(false), 1500);
-    };
-
-    const handleTouch = (e: TouchEvent) => {
-      if (e.touches[0].clientX < 40) setVisible(true);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("touchstart", handleTouch);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("touchstart", handleTouch);
-    };
-  }, []);
+  // Sidebar is always visible, expands on hover
+  const visible = true;
 
   return (
     <aside
@@ -61,10 +35,9 @@ export default function Sidebar() {
         shadow-[0_20px_60px_rgba(0,0,0,0.45)]
         transition-all duration-300 ease-out
         overflow-hidden
-        ${visible ? "w-[72px] opacity-100" : "w-[72px] opacity-0 -translate-x-20"}
+        w-[72px] opacity-100
         hover:w-[220px]
       `}
-      onMouseLeave={() => setVisible(false)}
     >
       {/* LOGO */}
       <div className="mb-8 flex items-center gap-3 px-4 py-6">
