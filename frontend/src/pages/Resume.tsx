@@ -28,28 +28,15 @@ export default function Resume() {
                 lg:text-3xl
               "
             >
-              Resume
+              Job Match Analysis
             </h1>
             <p className="text-sm text-gray-400 max-w-2xl">
-              Interactive resume with AI-powered job matching analysis
+              AI-powered job description analysis and match scoring
             </p>
           </header>
 
-          {/* ================= OTHER RESUME SECTIONS ================= */}
-          {/* Example placeholder */}
-          {/* <ProfileSection /> */}
-          {/* <ExperienceSection /> */}
-          {/* <SkillsSection /> */}
-
           {/* ================= JOB MATCH ================= */}
-          <section
-            className="
-              pt-8
-              sm:pt-12
-              lg:pt-16
-              border-t border-white/10
-            "
-          >
+          <section>
             <JobMatchSection />
           </section>
         </div>
