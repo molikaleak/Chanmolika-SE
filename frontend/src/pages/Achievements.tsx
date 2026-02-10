@@ -105,7 +105,7 @@ export default function Achievements() {
           whileHover={{ scale: 1.02 }}
         >
           <p className="text-gray-400 mb-6">
-            Want to collaborate on something amazing? Let's connect!
+            Want to collaborate on something amazing? Let&apos;s connect!
           </p>
           <motion.button
             className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold"

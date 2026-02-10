@@ -5,6 +5,8 @@ import type { JSX } from "react";
 import Skills from "../pages/Skills";
 import Resume from "../pages/Resume";
 import Achievements from "../pages/Achievements";
+import Contact from "../pages/Contact";
+import Projects from "../pages/Projects";
 
 export default function AppRouter(): JSX.Element {
   return (
@@ -14,8 +16,10 @@ export default function AppRouter(): JSX.Element {
       <Route path="/job" element={<Job />} />
       // routes.tsx or App.tsx
       <Route path="/skills" element={<Skills />} />
+      <Route path="/projects" element={<Projects />} />
       <Route path="/resume" element={<Resume />} />
       <Route path="/achievements" element={<Achievements />} />
+      <Route path="/contact" element={<Contact />} />
     </Routes>
   );
 }

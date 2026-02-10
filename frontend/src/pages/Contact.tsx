@@ -16,7 +16,7 @@ export default function Contact() {
             Get in Touch
           </h1>
           <p className="mt-4 text-lg text-gray-700 max-w-2xl">
-            I'm always open to discussing new opportunities, collaborations, or just a friendly chat.
+            I&apos;m always open to discussing new opportunities, collaborations, or just a friendly chat.
             Feel free to reach out through any of the channels below.
           </p>
         </div>
@@ -104,14 +104,14 @@ export default function Contact() {
               <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-900" />
               <div className="relative p-8 text-white">
                 <span className="inline-flex px-4 py-2 mb-4 text-sm font-semibold rounded-full bg-white/20">
-                  🚀 Let's Work Together
+                  🚀 Let&apos;s Work Together
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold leading-tight">
                   Ready to bring your ideas to life?
                 </h2>
                 <p className="mt-4 text-white/90">
                   I specialize in building innovative software solutions with a focus on fintech, AI, and modern web technologies.
-                  Whether you need a project developed, technical consultation, or a team member, I'm here to help.
+                  Whether you need a project developed, technical consultation, or a team member, I&apos;m here to help.
                 </p>
                 <div className="mt-8 grid grid-cols-2 gap-6">
                   <div className="bg-white/20 rounded-xl p-4">
