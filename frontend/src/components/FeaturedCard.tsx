@@ -34,8 +34,7 @@ export default function FeaturedCard() {
 
         {/* Description */}
         <p className="mt-3 md:mt-4 text-xs sm:text-sm text-white/90">
-          Fintech-focused developer with strong leadership,
-          research experience, and passion for innovation-driven products.
+          Innovative and tech-savvy problem solver with strong leadership skills, specializing in fintech and technology .
         </p>
 
         {/* Stats */}
@@ -48,16 +47,12 @@ export default function FeaturedCard() {
           "
         >
           <div>
-            <p className="text-lg sm:text-xl md:text-2xl font-bold">15+</p>
-            <p className="text-[10px] sm:text-xs text-white/70">Projects</p>
+            <p className="text-lg sm:text-xl md:text-2xl font-bold">7+</p>
+            <p className="text-[10px] sm:text-xs text-white/70">Work Experiences</p>
           </div>
           <div>
-            <p className="text-lg sm:text-xl md:text-2xl font-bold">6</p>
-            <p className="text-[10px] sm:text-xs text-white/70">Hackathons</p>
-          </div>
-          <div>
-            <p className="text-lg sm:text-xl md:text-2xl font-bold">MAX</p>
-            <p className="text-[10px] sm:text-xs text-white/70">Leadership</p>
+            <p className="text-lg sm:text-xl md:text-2xl font-bold">10+</p>
+            <p className="text-[10px] sm:text-xs text-white/70">Achievements</p>
           </div>
         </div>
       </div>

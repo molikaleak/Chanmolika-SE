@@ -21,7 +21,7 @@ export interface StoryScene {
   dialogue: string;
   skills: string[];
   glow: boolean;
-  cameraZ: number; // 🎥 roadmap position
+  cameraZ: number;
 }
 
 export const storyScript: StoryScene[] = [
@@ -32,7 +32,7 @@ export const storyScript: StoryScene[] = [
     image: "/assets/girl/image1.png",
     position: "center",
     dialogue:
-      "At the beginning, I was just curious. I didn’t know what I wanted to become, but I knew I loved creating things.",
+      "At the beginning, I was just curious. I didn't know what I wanted to become, but I knew I loved creating things.",
     skills: [],
     glow: false,
     cameraZ: 0,
@@ -56,7 +56,7 @@ export const storyScript: StoryScene[] = [
     image: "/assets/girl/image3.png",
     position: "right",
     dialogue:
-      "When things broke, I didn’t give up. I learned how to debug, one error at a time.",
+      "When things broke, I didn't give up. I learned how to debug, one error at a time.",
     skills: ["Problem Solving", "Debugging"],
     glow: true,
     cameraZ: -18,
@@ -140,7 +140,7 @@ export const storyScript: StoryScene[] = [
     image: "/assets/girl/image10.png",
     position: "center",
     dialogue:
-      "This is not the end of my story. I’m still learning, still growing, and still dreaming.",
+      "This is not the end of my story. I'm still learning, still growing, and still dreaming.",
     skills: ["Full-Stack", "Problem Solver", "Creative Thinker"],
     glow: true,
     cameraZ: -130,

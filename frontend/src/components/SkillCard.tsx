@@ -1,11 +1,12 @@
-import { Flame, Shield, Zap, Brain } from "lucide-react";
+import { Flame, Shield, Zap, Brain, Cpu, Database, Cloud, Lock } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const skills = [
-  { name: "Frontend", level: 90, icon: Flame },
-  { name: "Backend", level: 85, icon: Shield },
-  { name: "AI / ML", level: 75, icon: Brain },
-  { name: "Web3", level: 70, icon: Zap },
+  { name: "Frontend & Mobile", level: 92, icon: Flame },
+  { name: "Backend & Database", level: 88, icon: Database },
+  { name: "AI / Machine Learning", level: 82, icon: Brain },
+  { name: "DevOps & Cloud", level: 85, icon: Cloud },
+  { name: "Security", level: 80, icon: Lock },
 ];
 
 export default function SkillCard() {
@@ -38,7 +39,7 @@ export default function SkillCard() {
           <Zap size={20} className="text-red-400" />
         </div>
         <h3 className="text-lg font-bold tracking-wide">
-          Skill Tree
+          Tech Stack Mastery
         </h3>
       </div>
 
@@ -82,7 +83,7 @@ export default function SkillCard() {
 
       {/* Footer */}
       <div className="mt-6 text-xs text-white/50 text-center">
-        XP bars animate on load
+        React, TypeScript, Node.js, Python, Docker, AWS, PostgreSQL, TensorFlow
       </div>
 
       {/* Glow */}

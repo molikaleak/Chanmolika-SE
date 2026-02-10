@@ -6,7 +6,6 @@ export default function Skills(): JSX.Element {
   return (
     <AppLayout variant="overlay">
       <div className="relative w-full h-screen bg-black overflow-hidden">
-
         {/* 🧠 UI OVERLAY */}
         <div className="relative z-10 w-full h-full pointer-events-auto">
           {/* Title */}

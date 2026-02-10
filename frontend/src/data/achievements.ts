@@ -12,88 +12,66 @@ export interface Achievement {
 export const achievements: Achievement[] = [
   {
     id: "achievement-1",
-    title: "Full-Stack Portfolio Website",
-    description: "Designed and developed a responsive portfolio with React, TypeScript, and Three.js integrations. Features interactive 3D maps and real-time animations.",
-    image: "/moo1.png",
-    category: "Web Development",
-    date: "2024",
-    tags: ["React", "TypeScript", "Three.js", "Tailwind CSS"],
-    link: "https://github.com/username/portfolio"
+    title: "CamTech Idea Competition – Top 1",
+    description: "Project addressed educational challenges in Cambodia. Introduced innovative revenue model. Developed a STEM app emphasizing hands-on practice with experiments using computers and smart devices.",
+    image: "/archivment/cic.png",
+    category: "Competition",
+    date: "2023",
+    tags: ["Education", "STEM", "Innovation", "App Development"]
   },
   {
     id: "achievement-2",
-    title: "AI-Powered Resume Analyzer",
-    description: "Built a machine learning service that extracts and matches resume content with job descriptions using NLP and vector embeddings.",
-    image: "/moo2.png",
-    category: "AI/ML",
+    title: "KonektAgri Hackathon – Top 1",
+    description: "Role: Team leader and presenter. Focused on agriTech. Introduced an innovative solution combining branding and business intelligence for the agriculture market.",
+    image: "/archivment/agri.png",
+    category: "Hackathon",
     date: "2023",
-    tags: ["Python", "FastAPI", "OpenAI", "PostgreSQL"],
-    link: "https://github.com/username/resume-analyzer"
+    tags: ["AgriTech", "Business Intelligence", "Team Leadership", "Presentation"]
   },
   {
     id: "achievement-3",
-    title: "Game Development with Unity",
-    description: "Created a 2D platformer game with custom physics, particle effects, and level design. Published on itch.io with 500+ downloads.",
-    image: "/moo3.png",
-    category: "Game Dev",
-    date: "2022",
-    tags: ["Unity", "C#", "Blender", "Photoshop"],
-    link: "https://itch.io/game"
+    title: "Incubation Innovation – Runner-up",
+    description: "Boba developed a mobile POS solution for online sellers. Selected as runner-up. Participated in a three-month incubation program focused on startups and entrepreneurship.",
+    image: "/archivment/ino.png",
+    category: "Startup",
+    date: "2023",
+    tags: ["POS", "Mobile App", "Incubation", "Entrepreneurship"]
   },
   {
     id: "achievement-4",
-    title: "Open Source Contribution",
-    description: "Contributed to popular open-source projects including React Native and Vite. Fixed bugs and improved documentation.",
-    image: "/moo4.png",
-    category: "Open Source",
+    title: "Reverse Innovation – Top 2",
+    description: "Team worked on promoting banking popularity. Created game-changing products. Introduced new features tailored for Gen Z with focus on UX and UI design.",
+    image: "/archivment/RI.png",
+    category: "Innovation",
     date: "2023",
-    tags: ["Git", "GitHub", "Documentation", "Bug Fixes"],
-    link: "https://github.com/react-native"
+    tags: ["Banking", "Gen Z", "UX/UI", "Product Design"]
   },
   {
     id: "achievement-5",
-    title: "UI/UX Design System",
-    description: "Designed a comprehensive design system with reusable components, color palettes, and typography scales for enterprise applications.",
-    image: "/moo5.png",
-    category: "Design",
-    date: "2024",
-    tags: ["Figma", "Design Tokens", "Accessibility", "Prototyping"]
+    title: "Canadia Hackathon – Top 3",
+    description: "Participated in Canadia Hackathon 2023, achieving top 3 position with innovative solution in fintech/banking sector.",
+    image: "/archivment/boba.png",
+    category: "Hackathon",
+    date: "2023",
+    tags: ["Fintech", "Banking", "Hackathon", "Innovation"]
   },
   {
     id: "achievement-6",
-    title: "Cloud Deployment Pipeline",
-    description: "Set up CI/CD pipelines with GitHub Actions, Docker, and AWS ECS for automated deployment of microservices.",
-    image: "/assets/girl/image1.png",
-    category: "DevOps",
-    date: "2023",
-    tags: ["AWS", "Docker", "GitHub Actions", "Terraform"],
-    link: "https://example.com"
-  },
-  {
-    id: "achievement-7",
-    title: "Mobile App for Health Tracking",
-    description: "Developed a cross-platform mobile app for health monitoring using React Native, with real-time charts and push notifications.",
-    image: "/assets/girl/image2.png",
-    category: "Mobile",
-    date: "2024",
-    tags: ["React Native", "Firebase", "Chart.js", "Expo"]
-  },
-  {
-    id: "achievement-8",
-    title: "Data Visualization Dashboard",
-    description: "Created an interactive dashboard for business analytics with D3.js and WebGL, handling large datasets with smooth animations.",
-    image: "/assets/girl/image3.png",
-    category: "Data Viz",
-    date: "2023",
-    tags: ["D3.js", "WebGL", "Python", "Dash"]
+    title: "FIRST Global Challenge – Top 10",
+    description: "Participated during COVID-19 pandemic. Team of 12 students from E2STEM Preah Yukunthor High School. Achieved 10th place among 175 countries in international robotics competition.",
+    image: "/archivment/fgc.png",
+    category: "Robotics",
+    date: "2020",
+    tags: ["Robotics", "STEM", "International", "Team Competition"]
   },
   {
     id: "achievement-9",
-    title: "Cybersecurity Certification",
-    description: "Earned professional certification in cybersecurity fundamentals, covering network security, cryptography, and ethical hacking.",
-    image: "/assets/girl/image4.png",
-    category: "Certification",
+    title: "Professional 3D Design – Siemens",
+    description: "Completed professional 3D design course. Designed a drone car project, applying creativity and technical skills.",
+    image: "/archivment/3d.png",
+    category: "Design",
     date: "2022",
-    tags: ["Security", "Networking", "Cryptography", "Ethical Hacking"]
-  }
+    tags: ["3D Design", "CAD", "Siemens", "Engineering"]
+  },
+
 ];
