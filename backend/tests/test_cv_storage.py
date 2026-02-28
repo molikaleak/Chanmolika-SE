@@ -37,7 +37,7 @@ def test_store_and_get_cv():
     # Store CV
     response = cv_storage_service.store_cv(request)
     assert response.cv_id is not None
-    assert response.success is True
+    assert response.message == "CV stored successfully"
     
     # Retrieve CV
     cv_data = cv_storage_service.get_cv(response.cv_id)

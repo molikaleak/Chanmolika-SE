@@ -50,7 +50,8 @@ def test_validate_file_valid():
     
     is_valid, message = pdf_service.validate_file(mock_file)
     assert is_valid is True
-    assert "valid" in message.lower()
+    # When validation passes, message should be None
+    assert message is None
 
 
 def test_validate_file_invalid_type():
@@ -69,12 +70,13 @@ def test_validate_file_too_large():
     mock_file = Mock(spec=UploadFile)
     mock_file.filename = "test.pdf"
     mock_file.content_type = "application/pdf"
-    mock_file.size = 11 * 1024 * 1024  # 11MB
+    mock_file.size = 35 * 1024 * 1024  # 35MB > 30MB limit
     # Add file attribute with seek method
     mock_file.file = Mock()
     mock_file.file.seek = Mock()
-    mock_file.file.tell = Mock(return_value=11 * 1024 * 1024)
+    mock_file.file.tell = Mock(return_value=35 * 1024 * 1024)
     
     is_valid, message = pdf_service.validate_file(mock_file)
     assert is_valid is False
+    assert message is not None
     assert "size" in message.lower() or "large" in message.lower()

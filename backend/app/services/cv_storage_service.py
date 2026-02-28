@@ -34,13 +34,13 @@ class CVStorageService:
             "id": cv_id,
             "stored_at": datetime.now(),
             "raw_text": request.raw_text,
-            "contact_info": request.contact_info.dict() if request.contact_info else None,
-            "skills": [skill.dict() for skill in request.skills] if request.skills else [],
-            "experiences": [exp.dict() for exp in request.experiences] if request.experiences else [],
-            "education": [edu.dict() for edu in request.education] if request.education else [],
-            "languages": [lang.dict() for lang in request.languages] if request.languages else [],
+            "contact_info": request.contact_info.model_dump() if request.contact_info else None,
+            "skills": [skill.model_dump() for skill in request.skills] if request.skills else [],
+            "experiences": [exp.model_dump() for exp in request.experiences] if request.experiences else [],
+            "education": [edu.model_dump() for edu in request.education] if request.education else [],
+            "languages": [lang.model_dump() for lang in request.languages] if request.languages else [],
             "tech_stack": request.tech_stack or [],
-            "analysis_result": request.analysis_result.dict() if request.analysis_result else None,
+            "analysis_result": request.analysis_result.model_dump() if request.analysis_result else None,
             "metadata": request.metadata
         }
         
