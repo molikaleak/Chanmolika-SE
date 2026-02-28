@@ -34,7 +34,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: ${{ env.FRONTEND_PROJECT_DIR }}/package-lock.json
+          cache-dependency-path: '**/package-lock.json'
 
       - name: Setup for ${{ matrix.component }}
         if: matrix.component == 'backend'
@@ -125,7 +125,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: ${{ env.FRONTEND_PROJECT_DIR }}/package-lock.json
+          cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
         run: cd ${{ env.FRONTEND_PROJECT_DIR }} && npm ci
