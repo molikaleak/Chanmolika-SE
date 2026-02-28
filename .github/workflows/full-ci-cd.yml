@@ -34,13 +34,24 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
+          cache-dependency-path: 'frontend/package-lock.json'
 
       - name: Setup for ${{ matrix.component }}
         if: matrix.component == 'backend'
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      
+      - name: Cache Python dependencies
+        if: matrix.component == 'backend'
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.local
+          key: ${{ runner.os }}-python-${{ hashFiles('backend/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-python-
 
       - name: Install dependencies for ${{ matrix.component }}
         if: matrix.component == 'frontend'
@@ -125,7 +136,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
+          cache-dependency-path: 'frontend/package-lock.json'
 
       - name: Install dependencies
         run: cd ${{ env.FRONTEND_PROJECT_DIR }} && npm ci
