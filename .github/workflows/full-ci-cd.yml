@@ -46,9 +46,7 @@ jobs:
         if: matrix.component == 'backend'
         uses: actions/cache@v3
         with:
-          path: |
-            ~/.cache/pip
-            ~/.local
+          path: ~/.cache/pip
           key: ${{ runner.os }}-python-${{ hashFiles('backend/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-python-
