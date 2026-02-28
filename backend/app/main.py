@@ -5,7 +5,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from app.services.pdf_service import pdf_service
 from app.services.cv_storage_service import cv_storage_service
+from app.services.database_service import DatabaseService, create_tables
 from app.core.models import CVStorageRequest
+from app.core.db_models import JDAnalysis  # Import model to register with Base
 from app.core.config import settings
 
 from app.core.config import settings
@@ -40,7 +42,18 @@ app.add_middleware(
 app.include_router(api_router, prefix=settings.API_V1_PREFIX)
 
 @app.on_event("startup")
-def load_default_cv():
+async def startup_event():
+    """Initialize services on startup."""
+    # Initialize database
+    logger.info("🔧 Initializing database...")
+    await DatabaseService.connect()
+    create_tables()
+    logger.info("✅ Database initialized")
+    
+    # Load default CV
+    await load_default_cv()
+
+async def load_default_cv():
     cv_path = settings.DEFAULT_CV_PATH
 
     if not cv_path.exists():

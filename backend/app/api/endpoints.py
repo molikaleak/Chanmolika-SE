@@ -19,6 +19,7 @@ from app.core.models import (
 from app.services.pdf_service import pdf_service
 from app.services.deepseek_service import deepseek_service
 from app.services.cv_storage_service import cv_storage_service
+from app.services.database_service import DatabaseService
 
 logger = logging.getLogger(__name__)
 
@@ -28,10 +29,15 @@ router = APIRouter()
 @router.get("/health", response_model=HealthResponse)
 async def health_check():
     """Health check endpoint."""
+    # Check database connectivity
+    db_healthy = await DatabaseService.health_check()
+    db_status = "connected" if db_healthy else "disconnected"
+    
     return HealthResponse(
         status="healthy",
         version=settings.VERSION,
-        service=settings.PROJECT_NAME
+        service=settings.PROJECT_NAME,
+        database=db_status
     )
 
 

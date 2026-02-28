@@ -9,6 +9,7 @@ class HealthResponse(BaseModel):
     status: str = "healthy"
     version: str
     service: str
+    database: str = "connected"
 
 
 class JobDescriptionRequest(BaseModel):

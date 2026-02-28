@@ -36,6 +36,9 @@ class Settings(BaseSettings):
     # CORS - can be comma-separated string or list
     CORS_ORIGINS: Union[str, List[str]] = "http://localhost:3000,http://localhost:5173"
     
+    # Database
+    DATABASE_URL: str = "sqlite:///./cv_analysis.db"
+    
     @field_validator('CORS_ORIGINS', mode='after')
     @classmethod
     def parse_cors_origins(cls, v):
